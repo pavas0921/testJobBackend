@@ -7,8 +7,8 @@ async function bootstrap() {
 
   // Habilitar CORS
   app.enableCors({
-    origin: 'http://localhost:5173', // Cambia esto por el puerto de tu app React si es diferente
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 

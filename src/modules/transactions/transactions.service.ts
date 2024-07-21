@@ -37,6 +37,12 @@ export class TransactionsService {
       customerID: transaction.customerID,
     };
 
+    const productReq = {
+      productQty: transaction.productQty,
+      productPrice: transaction.productPrice,
+      productId: transaction.productId,
+    };
+
     const cardData = {
       number: transaction.number,
       cvc: transaction.cvc,
@@ -110,7 +116,7 @@ export class TransactionsService {
 
         const signature = generateIntegritySignature(
           paymentRefence,
-          (transaction.baseFee + transaction.deliveryFee) * 100,
+          transactionData.total * 100,
           'COP',
           'stagtest_integrity_nAIBuqayW70XpUqJS4qf4STYiISd89Fp',
         );
@@ -120,7 +126,7 @@ export class TransactionsService {
         };
 
         const transactionResponse = await this.transaction.createTransaction(
-          (transaction.baseFee + transaction.deliveryFee) * 100,
+          transactionData.total * 100,
           'COP',
           signature,
           transaction.customer_email,
@@ -154,9 +160,9 @@ export class TransactionsService {
           }
 
           var addTransactionsDetail = await this.transactionDetails.create({
-            quantity: 2,
-            unitPrice: 7000,
-            productId: 1,
+            quantity: productReq.productQty,
+            unitPrice: productReq.productPrice,
+            productId: productReq.productId,
             transactionId: 2,
           });
 
@@ -201,6 +207,7 @@ export class TransactionsService {
           httpStatus: HttpStatus.OK,
           message: 'Transacción Aprobada',
           data: updatedTransaction,
+          product: productData,
         };
       } catch {
         throw new Error('No se pudo obtener el token');

@@ -57,4 +57,16 @@ export class CreateTransactionDto {
   @IsEmail()
   @IsNotEmpty()
   customer_email: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  productQty: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  productPrice: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  productId: number;
 }
